@@ -1,0 +1,261 @@
+/* assets/style.css — MediPredict AI Global Styles */
+
+/* ── Google Font ─────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ── Root Overrides ──────────────────────────────────────────── */
+html, body, [class*="css"] {
+    font-family: 'Inter', sans-serif !important;
+}
+
+/* ── Main app background ─────────────────────────────────────── */
+.stApp {
+    background: #0A0F1E !important;
+}
+
+.block-container {
+    padding-top: 1.5rem !important;
+    padding-bottom: 2rem !important;
+    max-width: 1200px !important;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────── */
+[data-testid="stSidebar"] {
+    background: #0D1B2A !important;
+    border-right: 1px solid #1A3A5C !important;
+}
+
+[data-testid="stSidebar"] .stButton > button {
+    border-radius: 8px !important;
+    font-size: 0.88rem !important;
+    text-align: left !important;
+    transition: all 0.15s ease !important;
+}
+
+/* ── Radio buttons (disease selector) ───────────────────────── */
+[data-testid="stRadio"] > div {
+    gap: 0.5rem !important;
+    flex-wrap: wrap !important;
+}
+
+[data-testid="stRadio"] label {
+    background: #0D1B2A !important;
+    border: 1px solid #1A3A5C !important;
+    border-radius: 24px !important;
+    padding: 0.4rem 1rem !important;
+    font-size: 0.88rem !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+}
+
+[data-testid="stRadio"] label:hover {
+    border-color: #00B4D8 !important;
+    color: #00B4D8 !important;
+}
+
+/* ── Form inputs ─────────────────────────────────────────────── */
+input[type="number"],
+input[type="text"],
+.stTextInput > div > div > input,
+.stNumberInput > div > div > input {
+    background: #0D1B2A !important;
+    border: 1px solid #1A3A5C !important;
+    border-radius: 8px !important;
+    color: #E0E6F0 !important;
+}
+
+input:focus {
+    border-color: #00B4D8 !important;
+    box-shadow: 0 0 0 2px rgba(0, 180, 216, 0.15) !important;
+}
+
+/* ── Selectbox ───────────────────────────────────────────────── */
+.stSelectbox > div > div {
+    background: #0D1B2A !important;
+    border: 1px solid #1A3A5C !important;
+    border-radius: 8px !important;
+}
+
+/* ── Sliders ─────────────────────────────────────────────────── */
+.stSlider > div > div > div {
+    background: #1A3A5C !important;
+}
+
+.stSlider > div > div > div > div {
+    background: #00B4D8 !important;
+}
+
+/* ── Primary buttons ─────────────────────────────────────────── */
+.stButton > button[kind="primary"],
+button[data-testid="baseButton-primary"] {
+    background: linear-gradient(135deg, #00B4D8, #0077A8) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 10px !important;
+    font-weight: 700 !important;
+    font-size: 0.92rem !important;
+    padding: 0.6rem 1.5rem !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 4px 15px rgba(0, 180, 216, 0.25) !important;
+}
+
+.stButton > button[kind="primary"]:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 20px rgba(0, 180, 216, 0.4) !important;
+}
+
+/* ── Secondary buttons ───────────────────────────────────────── */
+.stButton > button[kind="secondary"],
+button[data-testid="baseButton-secondary"] {
+    background: #0D1B2A !important;
+    color: #A0B8CC !important;
+    border: 1px solid #1A3A5C !important;
+    border-radius: 10px !important;
+    font-size: 0.88rem !important;
+    transition: all 0.15s ease !important;
+}
+
+.stButton > button[kind="secondary"]:hover {
+    border-color: #00B4D8 !important;
+    color: #00B4D8 !important;
+}
+
+/* ── Form submit button ──────────────────────────────────────── */
+button[data-testid="baseButton-secondaryFormSubmit"],
+.stFormSubmitButton > button {
+    background: linear-gradient(135deg, #00B4D8, #0077A8) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 10px !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    padding: 0.7rem 2rem !important;
+    width: 100% !important;
+    box-shadow: 0 4px 15px rgba(0, 180, 216, 0.3) !important;
+    transition: all 0.2s ease !important;
+}
+
+.stFormSubmitButton > button:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 20px rgba(0, 180, 216, 0.45) !important;
+}
+
+/* ── Download button ─────────────────────────────────────────── */
+.stDownloadButton > button {
+    background: linear-gradient(135deg, #06D6A0, #00A080) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 10px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 15px rgba(6, 214, 160, 0.25) !important;
+    transition: all 0.2s ease !important;
+}
+
+.stDownloadButton > button:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 20px rgba(6, 214, 160, 0.4) !important;
+}
+
+/* ── Metrics ─────────────────────────────────────────────────── */
+[data-testid="stMetric"] {
+    background: #0D1B2A !important;
+    border: 1px solid #1A3A5C !important;
+    border-radius: 10px !important;
+    padding: 0.8rem !important;
+}
+
+[data-testid="stMetricValue"] {
+    font-size: 1.3rem !important;
+    font-weight: 700 !important;
+    color: #00B4D8 !important;
+}
+
+[data-testid="stMetricLabel"] {
+    font-size: 0.78rem !important;
+    color: #8899AA !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* ── Info / Warning / Error boxes ────────────────────────────── */
+.stAlert {
+    border-radius: 10px !important;
+}
+
+/* ── Progress bar ────────────────────────────────────────────── */
+.stProgress > div > div > div > div {
+    background: linear-gradient(90deg, #00B4D8, #E63946) !important;
+    border-radius: 10px !important;
+}
+
+/* ── Expanders ───────────────────────────────────────────────── */
+details {
+    background: #0D1B2A !important;
+    border: 1px solid #1A3A5C !important;
+    border-radius: 10px !important;
+    margin: 0.4rem 0 !important;
+}
+
+summary {
+    padding: 0.7rem 1rem !important;
+    font-weight: 600 !important;
+    color: #A0B8CC !important;
+    cursor: pointer !important;
+}
+
+/* ── Dividers ────────────────────────────────────────────────── */
+hr {
+    border-color: #1A3A5C !important;
+    margin: 1rem 0 !important;
+}
+
+/* ── Dataframes / Tables ─────────────────────────────────────── */
+.stDataFrame {
+    border: 1px solid #1A3A5C !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+}
+
+/* ── File uploader ───────────────────────────────────────────── */
+[data-testid="stFileUploader"] {
+    background: #0D1B2A !important;
+    border: 2px dashed #1A3A5C !important;
+    border-radius: 12px !important;
+    transition: border-color 0.2s !important;
+}
+
+[data-testid="stFileUploader"]:hover {
+    border-color: #00B4D8 !important;
+}
+
+/* ── Spinner ─────────────────────────────────────────────────── */
+.stSpinner > div {
+    border-top-color: #00B4D8 !important;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #0A0F1E; }
+::-webkit-scrollbar-thumb { background: #1A3A5C; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #00B4D8; }
+
+/* ── Tabs (if used) ──────────────────────────────────────────── */
+.stTabs [data-baseweb="tab-list"] {
+    background: #0D1B2A !important;
+    border-radius: 10px !important;
+    padding: 4px !important;
+    gap: 4px !important;
+}
+
+.stTabs [data-baseweb="tab"] {
+    background: transparent !important;
+    color: #8899AA !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    transition: all 0.15s !important;
+}
+
+.stTabs [aria-selected="true"] {
+    background: #00B4D8 !important;
+    color: white !important;
+}

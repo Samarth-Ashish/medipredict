@@ -1,0 +1,32 @@
+# ─────────────────────────────────────────────────────────────────
+# MediPredict AI – Requirements
+# ─────────────────────────────────────────────────────────────────
+# IMPORTANT: Pin ALL ML library versions to EXACTLY what Google Colab
+# used during training. A mismatch (even a minor patch bump) causes:
+#   → "SimpleImputer object has no attribute '_fill_dtype'"
+#   → XGBoost Booster load failures
+# ─────────────────────────────────────────────────────────────────
+
+# ── Core Framework ────────────────────────────────────────────────
+streamlit>=1.39.0
+
+# ── ML Stack (pin to Colab training versions) ─────────────────────
+scikit-learn==1.6.1
+xgboost==3.2.0
+lightgbm==4.6.0
+imbalanced-learn==0.14.1
+
+# ── Numerics ──────────────────────────────────────────────────────
+numpy==2.0.2
+pandas==2.2.2
+
+# ── PDF generation (reports) ──────────────────────────────────────
+fpdf2==2.8.1
+
+# ── PDF parsing (patient PDF upload) ──────────────────────────────
+PyMuPDF==1.24.14
+
+# ── Plotting / Explainability ─────────────────────────────────────
+matplotlib==3.9.4
+plotly==5.24.1
+shap==0.46.0
