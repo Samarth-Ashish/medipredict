@@ -111,7 +111,7 @@ def render_home():
                             margin-bottom:0.8rem;">
                     {meta['description']}
                 </div>
-                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;position:absolute;bottom:12px;">
                     <span style="background:{meta['color']}20;color:{meta['color']};
                                  padding:2px 8px;border-radius:10px;font-size:0.72rem;">
                         Acc {stats['acc']}
