@@ -14,8 +14,8 @@ st.set_page_config(
     layout      = "wide",
     initial_sidebar_state = "expanded",
     menu_items  = {
-        "Get Help":    "https://github.com/your-repo",
-        "Report a bug": "https://github.com/your-repo/issues",
+        "Get Help":    "https://github.com/Samarth-Ashish/medipredict",
+        "Report a bug": "https://github.com/Samarth-Ashish/medipredict/issues",
         "About":       "MediPredict AI — Multi-Disease Prediction System v1.0",
     },
 )
