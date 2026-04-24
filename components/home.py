@@ -147,7 +147,7 @@ def render_home():
                 background:#0D1B2A;
                 border:1px solid #1A3A5C;
                 border-radius:12px;
-                padding:0.8rem;
+                padding:0.5rem;
                 text-align:center;
                 height:190px;
             ">
