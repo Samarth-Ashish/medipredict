@@ -12,10 +12,10 @@ import streamlit as st
 import uuid
 from datetime import datetime
 
-from utils.constants    import DISEASE_META, DISEASE_FEATURES
-from utils.predictor    import predict_disease, get_loaded_models
-from utils.validators   import validate_patient_data
-from components.report  import generate_report_pdf
+from utils.constants import DISEASE_META, DISEASE_FEATURES
+from utils.predictor import predict_disease, get_loaded_models
+from utils.validators import validate_patient_data
+from components.report import generate_report_pdf
 
 
 # ═══════════════════════════════════════════════════════════════════
@@ -32,7 +32,7 @@ def render_diagnostics():
     # ── Disease selector ──────────────────────────────────────────
     st.markdown("**Select Disease to Screen For**")
 
-    disease_keys   = list(DISEASE_META.keys())
+    disease_keys = list(DISEASE_META.keys())
     disease_labels = [f"{DISEASE_META[d]['icon']} {DISEASE_META[d]['label']}"
                       for d in disease_keys]
 
@@ -46,7 +46,7 @@ def render_diagnostics():
     )
 
     selected_disease = disease_keys[selected_idx]
-    meta             = DISEASE_META[selected_disease]
+    meta = DISEASE_META[selected_disease]
 
     # Show disease banner
     st.markdown(f"""
@@ -100,7 +100,7 @@ def render_diagnostics():
 
     # ── PDF Upload path ────────────────────────────────────────────
     prefilled_from_pdf: dict = {}
-    pdf_warnings: list[str]  = []
+    pdf_warnings: list[str] = []
 
     if "Upload" in input_method:
         st.markdown(
@@ -122,12 +122,14 @@ def render_diagnostics():
             with st.spinner("Extracting values from PDF…"):
                 try:
                     from components.pdf_extractor import extract_fields, get_dummy_extracted
-                    pdf_bytes         = uploaded_pdf.read()
-                    prefilled_from_pdf = extract_fields(pdf_bytes, selected_disease)
+                    pdf_bytes = uploaded_pdf.read()
+                    prefilled_from_pdf = extract_fields(
+                        pdf_bytes, selected_disease)
 
                     # Fallback to dummy extraction if real extraction returns nothing
                     if not prefilled_from_pdf:
-                        prefilled_from_pdf = get_dummy_extracted(selected_disease)
+                        prefilled_from_pdf = get_dummy_extracted(
+                            selected_disease)
                         st.info(
                             "ℹ️ Real PDF extraction found no values in this file. "
                             "Pre-filling with demo values so you can see the form. "
@@ -145,7 +147,7 @@ def render_diagnostics():
     # ── Dynamic form ──────────────────────────────────────────────
     st.markdown(f"##### 🧪 Clinical Parameters — {meta['label']}")
 
-    loaded_models   = get_loaded_models()
+    loaded_models = get_loaded_models()
     model_available = selected_disease in loaded_models
 
     if not model_available:
@@ -155,8 +157,8 @@ def render_diagnostics():
             icon="🔧",
         )
 
-    fields     = DISEASE_FEATURES.get(selected_disease, [])
-    form_data  = {}
+    fields = DISEASE_FEATURES.get(selected_disease, [])
+    form_data = {}
 
     # Layout: 2-column grid for wide screens
     field_chunks = [fields[i:i+2] for i in range(0, len(fields), 2)]
@@ -166,17 +168,18 @@ def render_diagnostics():
             cols = st.columns(len(chunk))
             for col, field in zip(cols, chunk):
                 with col:
-                    key   = field["key"]
+                    key = field["key"]
                     label = field["label"]
-                    unit  = field.get("unit", "")
+                    unit = field.get("unit", "")
                     help_ = field.get("help", "")
                     ftype = field["type"]
 
                     display_label = f"{label} ({unit})" if unit else label
-                    pdf_val       = prefilled_from_pdf.get(key)
+                    pdf_val = prefilled_from_pdf.get(key)
 
                     if ftype == "number":
-                        default = float(pdf_val) if pdf_val is not None else float(field.get("default", 0))
+                        default = float(pdf_val) if pdf_val is not None else float(
+                            field.get("default", 0))
                         form_data[key] = st.number_input(
                             display_label,
                             min_value=float(field.get("min", 0)),
@@ -188,19 +191,20 @@ def render_diagnostics():
                         )
 
                     elif ftype == "slider":
-                        default = int(pdf_val) if pdf_val is not None else int(field.get("default", field.get("min", 0)))
+                        default = int(pdf_val) if pdf_val is not None else int(
+                            field.get("default", field.get("min", 0)))
                         form_data[key] = st.slider(
                             display_label,
                             min_value=int(field.get("min", 0)),
                             max_value=int(field.get("max", 100)),
                             value=default,
-                            step=int(field.get("step", 1)),
+                            step=max(int(field.get("step", 1)), 1),
                             help=help_,
                             key=f"{selected_disease}_{key}",
                         )
 
                     elif ftype == "select":
-                        options  = field.get("options", {})
+                        options = field.get("options", {})
                         opt_keys = list(options.keys())
                         default_key = field.get("default", opt_keys[0])
 
@@ -211,10 +215,11 @@ def render_diagnostics():
                                     default_key = ok
                                     break
 
-                        selected_key  = st.selectbox(
+                        selected_key = st.selectbox(
                             display_label,
                             options=opt_keys,
-                            index=opt_keys.index(default_key) if default_key in opt_keys else 0,
+                            index=opt_keys.index(
+                                default_key) if default_key in opt_keys else 0,
                             help=help_,
                             key=f"{selected_disease}_{key}",
                         )
@@ -243,7 +248,7 @@ def render_diagnostics():
                 try:
                     result = predict_disease(form_data, selected_disease)
                     st.session_state[f"last_result_{selected_disease}"] = result
-                    st.session_state[f"last_form_{selected_disease}"]   = form_data
+                    st.session_state[f"last_form_{selected_disease}"] = form_data
                     st.session_state[f"patient_info_{selected_disease}"] = {
                         "name":      patient_name or "Anonymous",
                         "age":       patient_age_form,
@@ -257,11 +262,13 @@ def render_diagnostics():
     result_key = f"last_result_{selected_disease}"
     if result_key in st.session_state:
         _render_results(
-            result       = st.session_state[result_key],
-            form_data    = st.session_state.get(f"last_form_{selected_disease}", {}),
-            patient_info = st.session_state.get(f"patient_info_{selected_disease}", {}),
-            meta         = meta,
-            disease      = selected_disease,
+            result=st.session_state[result_key],
+            form_data=st.session_state.get(
+                f"last_form_{selected_disease}", {}),
+            patient_info=st.session_state.get(
+                f"patient_info_{selected_disease}", {}),
+            meta=meta,
+            disease=selected_disease,
         )
 
 
@@ -276,27 +283,27 @@ def _render_results(result: dict, form_data: dict, patient_info: dict,
         unsafe_allow_html=True,
     )
 
-    is_positive   = result.get("prediction") == 1
-    confidence    = result.get("confidence", 0.0)
-    risk_level    = result.get("risk_level", "UNKNOWN")
-    is_dummy      = result.get("is_dummy", False)
+    is_positive = result.get("prediction") == 1
+    confidence = result.get("confidence", 0.0)
+    risk_level = result.get("risk_level", "UNKNOWN")
+    is_dummy = result.get("is_dummy", False)
 
     # ── Colour scheme ──────────────────────────────────────────────
     if is_positive:
-        result_color  = "#E63946"
-        result_bg     = "#2A0A0A"
+        result_color = "#E63946"
+        result_bg = "#2A0A0A"
         result_border = "#E6394640"
-        result_icon   = "🔴"
-        result_text   = f"POSITIVE — {meta['label']} Likely Detected"
+        result_icon = "🔴"
+        result_text = f"POSITIVE — {meta['label']} Likely Detected"
     else:
-        result_color  = "#06D6A0"
-        result_bg     = "#0A2A1A"
+        result_color = "#06D6A0"
+        result_bg = "#0A2A1A"
         result_border = "#06D6A040"
-        result_icon   = "🟢"
-        result_text   = f"NEGATIVE — No {meta['label']} Detected"
+        result_icon = "🟢"
+        result_text = f"NEGATIVE — No {meta['label']} Detected"
 
     risk_colors = {"HIGH": "#E63946", "MEDIUM": "#FFB703", "LOW": "#06D6A0"}
-    risk_color  = risk_colors.get(risk_level, "#8899AA")
+    risk_color = risk_colors.get(risk_level, "#8899AA")
 
     # ── Main result card ──────────────────────────────────────────
     st.markdown(f"""
@@ -379,11 +386,11 @@ def _render_results(result: dict, form_data: dict, patient_info: dict,
         )
 
         for row in importance[:6]:
-            feat   = row["feature"]
-            val    = row["value"]
+            feat = row["feature"]
+            val = row["value"]
             impact = row["impact"]
-            bar    = abs(impact) * 200  # scale for visual bar
-            color  = "#E63946" if impact > 0 else "#06D6A0"
+            bar = abs(impact) * 200  # scale for visual bar
+            color = "#E63946" if impact > 0 else "#06D6A0"
             direction = "↑ Risk" if impact > 0 else "↓ Risk"
 
             st.markdown(f"""
@@ -405,7 +412,7 @@ def _render_results(result: dict, form_data: dict, patient_info: dict,
     # ── Input Summary ─────────────────────────────────────────────
     with st.expander("📋 View Entered Values"):
         cols_per_row = 3
-        keys    = list(form_data.keys())
+        keys = list(form_data.keys())
         for i in range(0, len(keys), cols_per_row):
             row_cols = st.columns(cols_per_row)
             for j, col in enumerate(row_cols):
@@ -430,19 +437,19 @@ def _render_results(result: dict, form_data: dict, patient_info: dict,
     with dl_col1:
         try:
             pdf_bytes = generate_report_pdf(
-                patient_info  = patient_info,
-                result        = result,
-                disease_label = meta["label"],
-                patient_data  = form_data,
+                patient_info=patient_info,
+                result=result,
+                disease_label=meta["label"],
+                patient_data=form_data,
             )
             if pdf_bytes:
                 report_id = patient_info.get("report_id", "report")
                 st.download_button(
-                    label     = "⬇️  Download PDF Report",
-                    data      = pdf_bytes,
-                    file_name = f"MediPredict_{meta['label']}_{report_id}.pdf",
-                    mime      = "application/pdf",
-                    type      = "primary",
+                    label="⬇️  Download PDF Report",
+                    data=pdf_bytes,
+                    file_name=f"MediPredict_{meta['label']}_{report_id}.pdf",
+                    mime="application/pdf",
+                    type="primary",
                     use_container_width=True,
                 )
             else:

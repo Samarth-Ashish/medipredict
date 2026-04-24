@@ -81,10 +81,10 @@ def generate_report_pdf(
 
     if prediction == 1:
         banner_r, banner_g, banner_b = 200, 40, 40
-        result_text = f"POSITIVE — {disease_label} Detected"
+        result_text = f"POSITIVE - {disease_label} Detected"
     else:
         banner_r, banner_g, banner_b = 30, 150, 80
-        result_text = f"NEGATIVE — No {disease_label} Detected"
+        result_text = f"NEGATIVE - No {disease_label} Detected"
 
     pdf.set_fill_color(banner_r, banner_g, banner_b)
     pdf.rect(10, pdf.get_y(), 190, 18, "F")
@@ -111,7 +111,7 @@ def generate_report_pdf(
     if result.get("is_dummy"):
         pdf.set_text_color(200, 80, 0)
         pdf.set_font("Helvetica", "I", 8)
-        pdf.cell(0, 5, "⚠  DEMO MODE — Model files not yet loaded. Results are illustrative only.", ln=True)
+        pdf.cell(0, 5, "⚠  DEMO MODE - Model files not yet loaded. Results are illustrative only.", ln=True)
 
     pdf.set_text_color(0, 0, 0)
     pdf.ln(4)
