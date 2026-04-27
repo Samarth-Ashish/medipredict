@@ -65,9 +65,12 @@ def generate_report_pdf(
     pdf.cell(0, 7, f"Patient: {patient_info.get('name', 'Anonymous')}", ln=True)
 
     pdf.set_font("Helvetica", "", 10)
-    pdf.set_x(14)
+    ppdf.set_x(14)
     pdf.cell(90, 6, f"Report ID : {patient_info.get('report_id', 'N/A')}")
     pdf.cell(90, 6, f"Date      : {datetime.now().strftime('%d %b %Y, %H:%M')}", ln=True)
+    pdf.set_x(14)
+    pdf.cell(90, 6, f"Age       : {patient_info.get('age', 'N/A')}")
+    pdf.cell(90, 6, f"Gender    : {patient_info.get('gender', 'N/A')}", ln=True)
     pdf.set_x(14)
     pdf.cell(90, 6, f"Disease   : {disease_label}")
     pdf.cell(90, 6, f"Screened by: MediPredict AI v1.0", ln=True)
@@ -103,8 +106,8 @@ def generate_report_pdf(
     pdf.set_font("Helvetica", "", 9)
     pdf.set_text_color(120, 120, 120)
     pdf.cell(0, 5,
-        f"Decision threshold: {result.get('threshold_used', 0.45):.2f}  |  "
-        f"Model: Ensemble (RF + XGBoost)",
+        ff"Decision threshold: {result.get('threshold_used', 0.45):.2f}  |  "
+        f"Model: XGBoost",
         ln=True,
     )
 
