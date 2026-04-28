@@ -65,7 +65,7 @@ def generate_report_pdf(
     pdf.cell(0, 7, f"Patient: {patient_info.get('name', 'Anonymous')}", ln=True)
 
     pdf.set_font("Helvetica", "", 10)
-    ppdf.set_x(14)
+    pdf.set_x(14)
     pdf.cell(90, 6, f"Report ID : {patient_info.get('report_id', 'N/A')}")
     pdf.cell(90, 6, f"Date      : {datetime.now().strftime('%d %b %Y, %H:%M')}", ln=True)
     pdf.set_x(14)
