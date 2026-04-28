@@ -106,7 +106,7 @@ def generate_report_pdf(
     pdf.set_font("Helvetica", "", 9)
     pdf.set_text_color(120, 120, 120)
     pdf.cell(0, 5,
-        ff"Decision threshold: {result.get('threshold_used', 0.45):.2f}  |  "
+        f"Decision threshold: {result.get('threshold_used', 0.45):.2f}  |  "
         f"Model: XGBoost",
         ln=True,
     )
